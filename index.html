@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Doge Multiverse</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="assets/img/doge_icon_small_transparent_32xy32.png"
+    />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+
+    <!-- Bootstrap icons-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <!-- Google fonts-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script
+      type="text/javascript"
+      src="https://www.gstatic.com/charts/loader.js"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.3.4/dist/web3.min.js"></script>
+    <script type="text/javascript" src="js/cnt2.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"
+      type="text/javascript"
+    ></script>
+    <script></script>
+    <script type="text/javascript">
+      //contractjson
+      const deci = 10 ** 18;
+      function pID(stringgg) {
+        return parseInt(stringgg) / deci;
+      }
+      function pIDr(stringgg) {
+        return Math.round(pID(stringgg));
+      }
+      function pIDr15(stringgg) {
+        return Math.round(parseInt(stringgg) / 10 ** 15) / 1000;
+      }
+      function roundTo2DP(num) {
+        return (Math.round(num * 100) / 100).toPrecision(3).toString();
+      }
+      function numCommas(x) {
+        return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+      }
+      function pTimePast(stringgtime) {
+        // var d = new Date();
+        // console.log(d);
+        // var dd = Math.floor(d / 1000) - parseInt(stringgtime);
+        // console.log(dd);
+        // var ddd = moment().subtract(dd, "seconds").twitterShort();
+        // return ddd;
+        var d = new Date(parseInt(stringgtime) * 1000);
+        //console.log(d, "parsed time ");
+        //console.log(moment(d).fromNow(), "parsed time ");
+        return moment(d).fromNow();
+      }
+      const render = async () => {
+        const web3 = new Web3("https://bsc-dataseed.binance.org/");
+        const contractABI = contractjson;
+        //console.log(contractjson);
+        let contractAddress = "0x3c37ab18d0ec386d06dd68e3470e49bfdc0d46e8";
+        let contract = new web3.eth.Contract(
+          JSON.parse(contractABI),
+          contractAddress
+        );
+        contract.methods
+          .a_a_Show_All_Info()
+          .call()
+          .then((dictt) => {
+            const contractbnb = pIDr15(dictt.contract_weii);
+            const currentMilestone = pIDr15(dictt.current_milestone);
+            //console.log(contractbnb);
+            var r = document.querySelector(":root");
+            r.style.setProperty(
+              "--contractprog",
+              (Math.min(
+                Math.max(
+                  ((contractbnb / currentMilestone) * 100), 5),
+              100).toString() + "%"
+            ));
+            const pbt = document.getElementById("stakedms");
+            pbt.innerHTML =
+              contractbnb.toString() +
+              " BNB of " +
+              currentMilestone.toString() +
+              " BNB <em>Staking Milestone</em> (" +
+              roundTo2DP((contractbnb * 100) / currentMilestone) +
+              "%)";
+            const pbt2 = document.getElementById("stakedms2");
+            pbt2.innerHTML =
+              "Next Staking Milestone (" +
+              pIDr15(dictt.next_milestone).toString() +
+              " BNB)";
+          });
+        const pbal = await contract.methods.a_public_showSupplies().call();
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+          var data = google.visualization.arrayToDataTable([
+            ["Supply", "DogeMulti"],
+            ["Developer's Pool", pIDr(pbal.DeveloperPool)],
+            ["Gamer's Pool", pIDr(pbal.GamerPool)],
+            ["Community Pool", pIDr(pbal.CommunityPool)],
+            ["Adminstrative Funds", pIDr(pbal.AdminFunds)],
+            ["Marketing Funds", pIDr(pbal.MarketingFunds)],
+            ["Contract's Pool", pIDr(pbal.contractBalance)]
+          ]);
+
+          var options = {
+            title: "Total Supply of DogeMulti", //is3D:true
+            pieStartAngle: 100,
+            chartArea: {
+              left: 30,
+              width: "100%",
+              height: "90%",
+              top: 20
+            },
+            backgroundColor: "#f3f3f3"
+          };
+
+          var chart = new google.visualization.PieChart(
+            document.getElementById("piechart")
+          );
+
+          chart.draw(data, options);
+        }
+        //console.log(deci);
+        //console.log(pbal);
+        const bhist = await contract.methods.a_public_showBurnHistory().call();
+        //console.log(bhist);
+        const burnhist = document.getElementById("burnhist");
+        burnhist.innerHTML = `<p class="lead"><strong>Total tokens burnt</strong>:</p>
+              <p class="text-center">
+                ${numCommas(
+                  pIDr(bhist.Total_Burnt)
+                )} <strong>DogeMulti</strong> (<strong>${
+          Math.round(
+            ((pIDr(bhist.Total_Burnt) + pIDr(bhist.Total_Supply_Left)) /
+              pIDr(bhist.Total_Supply_Left)) *
+              100
+          ) / 100
+        }%</strong> of total
+                supply)
+              </p>
+              <p class="lead"><strong>Current Total Supply</strong>:</p>
+              <p class="text-center">${numCommas(
+                pIDr(bhist.Total_Supply_Left)
+              )} <strong>DogeMulti</strong></p>
+              <p class="lead"><strong>Latest Burnt Event</strong>:</p>
+              <p class="text-center">${pTimePast(bhist.Previous_Burnt_Time)}</p>
+              <p class="lead"><strong>Next Burn Event</strong>:</p>
+              <p class="text-center">
+                (Vote in <a href="https://discord.com/invite/BmCssqnhX6">Discord</a>)
+              </p>`;
+        burnhist.innerHTML = `      
+        <div class="row gx-3 justify-content-center content2">
+          <!-- card -->
+          <div class="card2info col-lg-5 mx-auto mb-0 mb-lg-3">
+            <p class="title">Total tokens burnt</p>
+            <p class="text">${numCommas(
+              pIDr(bhist.Total_Burnt)
+            )} <strong>DogeMulti</strong><br> (<strong>${
+          Math.round(
+            ((pIDr(bhist.Total_Burnt) + pIDr(bhist.Total_Supply_Left)) /
+              pIDr(bhist.Total_Supply_Left)) *
+              100
+          ) / 100
+        }%</strong> of Max
+                Supply)</p>
+          </div>
+          <!-- card -->
+          <div class="card2info col-lg-5 mx-auto mb-0 mb-lg-3">
+            <p class="title">Current Total Supply</p>
+            <p class="text">
+                ${numCommas(
+                  pIDr(bhist.Total_Supply_Left)
+                )} <strong>DogeMulti</strong>
+            </p>
+          </div>
+          <!-- card -->
+          <div class="card2info col-lg-5 mx-auto mb-0 mb-lg-3">
+            <p class="title">Latest Burnt Event</p>
+            <p class="text">${pTimePast(bhist.Previous_Burnt_Time)}</p>
+          </div>
+          <!-- card -->
+          <div class="card2info col-lg-5 mx-auto mb-0 mb-lg-3">
+            <p class="title">Next Burn Event</p>
+            <p class="text">
+                (Vote in <a href="https://discord.com/invite/BmCssqnhX6">Discord</a>)
+            </p>
+          </div>
+        </div> `;
+      };
+    </script>
+  </head>
+  <body id="page-top" onload="render()">
+    <!-- Navigation-->
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+      id="mainNav"
+    >
+      <div class="container px-4">
+        <a class="navbar-brand" href="#page-top">
+          <img
+            src="assets/img/doge_icon_32x32small.jpg"
+            alt="..."
+            class="ax-icon"
+            id="hide-when-mobile"
+          />
+          Doge Multiverse
+          <img
+            src="assets/img/doge_icon_32x32small.jpg"
+            alt="..."
+            class="ax-icon"
+            id="hide-when-mobile"
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#vprop">Value</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#Tokenomics">Tokenomics</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#roadmap">Roadmap</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#games">Games</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#gamestats">Statistics</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#team">Team</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#testimonials">Testimonials</a>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Header-->
+    <header class="bg-primary bg-gradient text-white">
+      <div class="container px-4 text-center py-3">
+        <h1 class="fw-bolder lh-lg">
+          <img src="assets/img/doge_icon_32x32small.jpg" class="ax-icon" /> Doge
+          Multiverse
+
+          <img src="assets/img/doge_icon_32x32small.jpg" class="ax-icon" />
+        </h1>
+        <p class="lead lh-1 py-1">
+          Cross-Platform Decentralised Gaming Currency.
+        </p>
+        <p class="lead lh-1 py-1 mb-3">
+          A Trustless BEP-20 token for In-Game Microtransactions.
+        </p>
+        <a
+          class="btn btn-lg btn-light py-1"
+          href="https://bscscan.com/token/0x3c37ab18d0ec386d06dd68e3470e49bfdc0d46e8"
+          >Verified Smart Contract on Binance</a
+        >
+      </div>
+      <div class="container py-3">
+          <div class="row gx-4 px-3 justify-content-center">
+              
+              <p class="lh-lg h5 mb-0 col-lg-3 text-center">$700k+ <em>Mkt. CAP</em></p>
+              <p class="lh-lg h5 mb-0 col-lg-3 text-center">20,000+ <em>Unique Players</em></p>
+              <p class="lh-lg h5 mb-0 col-lg-3 text-center">95%+ <em>Liq. Locked</em></p>
+    
+            </div>
+      </div>
+      <div class="container py-3">
+        <p class="lh-1 h5 mb-0 text-center" id="stakedms">
+          0 BNB of 0 BNB <em>Staking Milestone</em> (0%)
+        </p>
+      </div>
+      <div class="container progress2 py-3">
+        <div class="progress-value"></div>
+      </div>
+      <div class="container py-3">
+        <p class="lh-1 h7 mb-0 text-sm-end" id="stakedms2">
+          Next Staking Milestone (0 BNB)
+        </p>
+      </div>
+      <div class="container py-3">
+        <p class="lead text-center">
+          Community:
+        </p>
+        <div class="row justify-content-center mb-4">
+          <div class="col-lg-6 h-100 text-center my-auto mb-0">
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item me-4">
+                <a href="https://www.reddit.com/r/DogeMultiverse"
+                  ><i class="bi-reddit fs-7 white"></i
+                ></a>
+              </li>
+              <li class="list-inline-item me-4">
+                <a href="https://t.me/DogeMultiverse"
+                  ><i class="bi-telegram fs-7 white"></i
+                ></a>
+              </li>
+              <li class="list-inline-item me-4">
+                <a href="https://twitter.com/DogeMultiverse"
+                  ><i class="bi-twitter fs-7 white"></i
+                ></a>
+              </li>
+              <li class="list-inline-item me-4">
+                <a href="https://discord.com/invite/BmCssqnhX6"
+                  ><i class="bi-discord fs-7 white"></i
+                ></a>
+              </li>
+              <li class="list-inline-item me-4">
+                <a
+                  href="https://www.youtube.com/channel/UC0ZqV4fOjfpr4xtmpHAK3zA"
+                  ><i class="bi-youtube fs-7 white"></i
+                ></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="lh-1 pt-3 mb-0 text-center">
+          Token Address:
+          <strong>0x3c37ab18d0ec386d06dd68e3470e49bfdc0d46e8</strong>
+        </p>
+      </div>
+      <div class="container py-3">
+        <div class="row gx-4 px-3 justify-content-center">
+          <a
+            class="btn btn-sm btn-light px-3 mb-1 mb-lg-3"
+            target="_blank"
+            href="https://www.binance.com/en/blog/421499824684901055/Get-Started-on-Binance-Smart-Chain-in-60-Seconds"
+            >New to BEP-20 Tokens?
+            <img
+              src="assets/img/metamask_logo_small_cropped.jpg"
+              class="metamask-icon"
+            />
+            MetaMask Guide</a
+          >
+          <a
+            class="btn btn-sm btn-light px-3 mb-1 mb-lg-3"
+            href="earn_dogemv.html"
+            >Earn $DogeMulti</a
+          >
+        </div>
+        <div class="row gx-4 px-3 justify-content-center">
+          <a
+            class="btn btn-sm btn-light col-lg-6 mb-1 mb-lg-3"
+            href="quick_buy.html"
+            >Buy $DogeMulti from contract</a
+          >
+
+          <a
+            class="btn btn-sm btn-light col-lg-6 mb-1 mb-lg-3"
+            href="https://pancakeswap.finance/swap"
+            >Buy $DogeMulti from PancakeSwap
+            <img
+              src="assets/img/pancakeswap-cake-logo_50x50.png"
+              class="metamask-icon"
+          /></a>
+        </div>
+      </div>
+    </header>
+    <!-- value prop-->
+    <section id="vprop">
+      <div class="container px-4 text-center">
+        <div class="row gx-4 justify-content-center">
+          <h2>
+            <img
+              src="assets/img/doge_icon_small_transparent_32xy32.png"
+              alt="..."
+            />
+            Value Proposition
+            <img
+              src="assets/img/doge_icon_small_transparent_32xy32.png"
+              alt="..."
+            />
+          </h2>
+          <p class="lead">
+            Doge Multiverse serves as a community based currency to facilitate
+            the transcations of In-Game skins. See
+            <a href="coming_soon.html">whitepaper</a>.
+          </p>
+        </div>
+      </div>
+      <div class="container px-3">
+        <div class="row gx-3 justify-content-center content2">
+          <!-- card -->
+          <div class="card2 col-lg-2 mx-auto mb-0 mb-lg-3">
+            <div class="icon2">
+              <i class="material-icons md-36">offline_bolt</i>
+            </div>
+            <p class="title">3 second blocktimes.</p>
+            <p class="text">Transactions go brrrrrrrr.</p>
+          </div>
+          <!-- card -->
+          <div class="card2 col-lg-2 mx-auto mb-0 mb-lg-3">
+            <div class="icon2">
+              <i class="material-icons md-36">description</i>
+            </div>
+            <p class="title">100% transparent.</p>
+            <p class="text">
+              Verified Contract. All transactions are visible on bscscan.com.
+            </p>
+          </div>
+          <!-- card -->
+          <div class="card2 col-lg-2 mx-auto mb-0 mb-lg-3">
+            <div class="icon2">
+              <i class="material-icons md-36">precision_manufacturing</i>
+            </div>
+            <p class="title">BEP20 standard.</p>
+            <p class="text">
+              Fully Automated and Trustless Smart Contract.
+            </p>
+          </div>
+          <!-- card -->
+          <div class="card2 col-lg-2 mx-auto mb-0 mb-lg-3">
+            <div class="icon2">
+              <i class="material-icons md-36">savings</i>
+            </div>
+            <p class="title">Low transaction fees.</p>
+            <p class="text">
+              <strong>0%</strong> fee for buying, <strong>0.1%</strong> for
+              selling.
+            </p>
+          </div>
+          <!-- card -->
+          <div class="card2 col-lg-2 mx-auto mb-0 mb-lg-3">
+            <div class="icon2">
+              <i class="material-icons md-36">savings</i>
+            </div>
+            <p class="title">Seamless integration.</p>
+            <p class="text">
+              Open sourced API for onboarding game developers.
+            </p>
+          </div>
+          <!-- card -->
+          <div class="card2 col-lg-2 mx-auto mb-0 mb-lg-3">
+            <div class="icon2">
+              <i class="material-icons md-36">vpn_key</i>
+            </div>
+            <p class="title">Low Volatility.</p>
+            <p class="text">
+              Deflationary exchange rate while pegged to BNB tokens.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Tokenomics section-->
+    <section id="Tokenomics" class="bg-fade text-center">
+      <div class="container px-4">
+        <div class="row gx-4 justify-content-center">
+          <h2>
+            <img
+              src="assets/img/doge_icon_small_transparent_32xy32.png"
+              alt="..."
+            />Tokenomics<img
+              src="assets/img/doge_icon_small_transparent_32xy32.png"
+              alt="..."
+            />
+          </h2>
+          <p class="lead">
+            Naturally Deflationary tokens. Every week, <strong>5%</strong> of
+            tokens in Contract's Pool will be <strong>burnt</strong> from
+            Contract's Pool if transaction activity is low.
+          </p>
+        </div>
+      </div>
+      <div class="container p-3 align-content-center">
+        <div
+          class="row gx-4 col-lg-9 justify-content-center align-content-center"
+        >
+          <div
+            id="piechart"
+            class="align-content-center"
+            style="width: 70%; height: 110%;"
+          ></div>
+        </div>
+      </div>
+      <div class="container p-3 justify-content-center" id="burnhist">
+        loading.......
+      </div>
+      <div class="container p-3 justify-content-center">
+        <div>
+          <p class="lead"><strong>Allocation of tokens </strong>:</p>
+        </div>
+        <div>
+          <ul class="card2infoallocation">
+            <li>
+              Developer's Pool: Token incentives for developers to integrate
+              DogeMulti API.
+            </li>
+            <li>
+              Gamer's Pool: Token incentives for gamers to earn DogeMulti via
+              playing games.
+            </li>
+            <li>
+              Community Pool: Token incentives for discord community to engage
+              in discord.
+            </li>
+            <li>
+              Adminstrative Funds: Token incentives for discord and gaming staff
+              for moderation.
+            </li>
+            <li>
+              Marketing Funds: Token incentives for influencers and marketing
+              costs.
+            </li>
+            <li>
+              Contract Pool: Available tokens for sale on Binance Block chain.
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="container p-3">
+        <p class="text-sm-end">
+          Verify Data on
+          <a
+            href="https://bscscan.com/token/0x3c37ab18d0ec386d06dd68e3470e49bfdc0d46e8"
+            >Binance Smart Chain</a
+          >
+        </p>
+      </div>
+    </section>
+    <!-- Icons Grid-->
+    <section id="roadmap" class="features-icons text-center">
+      <div class="container align-content-center">
+        <div class="row">
+          <div class="align-content-center">
+            <h2>
+              <img
+                src="assets/img/doge_icon_small_transparent_32xy32.png"
+                alt="..."
+              />Roadmap<img
+                src="assets/img/doge_icon_small_transparent_32xy32.png"
+                alt="..."
+              />
+            </h2>
+          </div>
+          <div></div>
+        </div>
+      </div>
+      <div class="container align-content-center pt-3">
+          <p class="lead"><strong>Liquid Pool Milestones</strong></p>
+        </div>
+        <div class="container pt-0 align-content-center">
+          <div class="row pt-0 align-content-center">
+            <div class="card2infolpmilestones col-lg-6 text-decoration-line-through ">
+              0.1 BNB >> +1% Exchange Rate
+            </div>
+            <div class="card2infolpmilestones col-lg-6">
+              0.2 BNB >> +1% Exchange Rate
+            </div>
+            <div class="card2infolpmilestones col-lg-6">
+              0.5 BNB >> +1% Exchange Rate
+            </div>
+            <div class="card2infolpmilestones col-lg-6">
+              1 BNB >> +1% Exchange Rate <br>1% Contract Supply Burn
+            </div>
+          </div> 
+        </div>
+        <div class="container align-content-center pt-3">
+            <p class="lead"><strong>Community Milestones</strong></p>
+          </div>
+          <div class="container pt-0 align-content-center">
+            <div class="row pt-0 align-content-center">
+              <!-- <span class="stamp is-approved">
+                COMPLETED
+              </span> -->
+              <div class="card2infolpmilestones col-lg-6">
+                500 Discord Members >> 100,000 DogeMulti AIRDROP
+              </div>
+              <div class="card2infolpmilestones col-lg-6">
+                1000 Discord Members >> 50,000 DogeMulti AIRDROP
+              </div>
+              <div class="card2infolpmilestones col-lg-6">
+                2000 Discord Members >> 25,000 DogeMulti AIRDROP
+              </div>
+            </div> 
+          </div>
+          <div class="container align-content-center pt-3">
+              <p class="lead"><strong>Integration and API Milestones</strong></p>
+            </div>
+            <div class="container pt-0 align-content-center">
+              <div class="row pt-0 align-content-center">
+                <div class="card2infolpmilestones col-lg-6">
+                  +1 Game Integration >> +1.5% Exchange Rate
+                </div>
+                <div class="card2infolpmilestones col-lg-6">
+                  +1 Skin Cosmetic Design >> +0.1% Exchange Rate
+                </div>
+                <div class="card2infolpmilestones col-lg-6">
+                  DApp Integration >> +1% Exchange Rate
+                </div>
+              </div> 
+            </div>
+    </section>
+    <!-- gme mode section-->
+    <section id="games" class="bg-fade">
+      <div class="container px-4 align-content-center">
+        <div class="row gx-4 justify-content-center">
+          <div class="align-content-center">
+            <h2>
+              <img
+                src="assets/img/doge_icon_small_transparent_32xy32.png"
+                alt="..."
+              />Game Modes<img
+                src="assets/img/doge_icon_small_transparent_32xy32.png"
+                alt="..."
+              />
+            </h2>
+          </div>
+        </div>
+      </div>
+        <div class="container align-content-center">
+            <ul class="card2infogamemodes">
+              <li>Mindustry</li>
+              <li>Cookie Clicker</li>
+              <li>Minecraft</li>
+              <li>Factorio</li>
+              <li>Terraria</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+    <!-- gamestats section-->
+    <section id="gamestats">
+      <div class="container px-4 align-content-center">
+        <div class="row gx-4 justify-content-center">
+          <div>
+            <h2>
+              <img
+                src="assets/img/doge_icon_small_transparent_32xy32.png"
+                alt="..."
+              />Game Statistics<img
+                src="assets/img/doge_icon_small_transparent_32xy32.png"
+                alt="..."
+              />
+            </h2>
+            <ul>
+              <li>20000+ Unique Players since 2020</li>
+              <li>100000+ Total Hours Played</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div>
+        <iframe
+          style="
+            background: #ffffff;
+            border: none;
+            border-radius: 2px;
+            box-shadow: 0 2px 10px 0 rgba(70, 76, 79, 0.2);
+          "
+          width="100%"
+          height="500"
+          src="https://charts.mongodb.com/charts-project-0-wfwdj/embed/charts?id=779c31a4-a0f3-4837-a585-5ba99cc4667c&theme=light"
+        ></iframe>
+      </div>
+    </section>
+    <!-- our team -->
+    <section id="team" class="testimonials text-center bg-fade">
+      <div class="container">
+        <h2 class="mb-5">
+          <img
+            src="assets/img/doge_icon_small_transparent_32xy32.png"
+            alt="..."
+          />
+          Our Team<img
+            src="assets/img/doge_icon_small_transparent_32xy32.png"
+            alt="..."
+          />
+        </h2>
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+              <img
+                class="img-fluid rounded-circle mb-3 pfp-icon"
+                src="assets/img/doge_icon.PNG"
+                alt="Developer"
+              />
+              <h5>alex_unique_modifier#8760</h5>
+              <p class="font-weight-light mb-0">
+                "Wow. Much. Unique."
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+              <img
+                class="img-fluid rounded-circle mb-3 pfp-icon"
+                src="assets/img/doge_icon.PNG"
+                alt="Admin"
+              />
+              <h5>Watermelon 🍉#2137</h5>
+              <p class="font-weight-light mb-0">
+                "Melon."
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+              <img
+                class="img-fluid rounded-circle mb-3 pfp-icon"
+                src="assets/img/doge_icon.PNG"
+                alt="Admin"
+              />
+              <h5>unjown#4644</h5>
+              <p class="font-weight-light mb-0">
+                "lol."
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+              <img
+                class="img-fluid rounded-circle mb-3 pfp-icon"
+                src="assets/img/doge_icon.PNG"
+                alt="Developer"
+              />
+              <h5>Lin#3109</h5>
+              <p class="font-weight-light mb-0">
+                "Lin.bin"
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+              <img
+                class="img-fluid rounded-circle mb-3 pfp-icon"
+                src="assets/img/doge_icon.PNG"
+                alt="Admin"
+              />
+              <h5>Sylerfire#5319</h5>
+              <p class="font-weight-light mb-0">
+                "Factoriooooooooo."
+              </p>
+            </div>
+          </div>
+
+          <div class="col-lg-3">
+            <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+              <img
+                class="img-fluid rounded-circle mb-3 pfp-icon"
+                src="assets/img/doge_icon.PNG"
+                alt="Admin Mindustry"
+              />
+              <h5>real shizi#0001</h5>
+              <p class="font-weight-light mb-0">
+                "Mindustry??"
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+              <img
+                class="img-fluid rounded-circle mb-3 pfp-icon"
+                src="assets/img/doge_icon.PNG"
+                alt="Admin Minecraft"
+              />
+              <h5>GaiaBot#1043</h5>
+              <p class="font-weight-light mb-0">
+                "Minecraft??"
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+              <img
+                class="img-fluid rounded-circle mb-3 pfp-icon"
+                src="assets/img/doge_icon.PNG"
+                alt="Admin"
+              />
+              <h5>Puro#6516</h5>
+              <p class="font-weight-light mb-0">
+                "Purooooooooo."
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+              <img
+                class="img-fluid rounded-circle mb-3 pfp-icon"
+                src="assets/img/doge_icon.PNG"
+                alt="Admin"
+              />
+              <h5>Bambuko#2582</h5>
+              <p class="font-weight-light mb-0">
+                "Minecraft."
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+              <img
+                class="img-fluid rounded-circle mb-3 pfp-icon"
+                src="assets/img/doge_icon.PNG"
+                alt="Admin"
+              />
+              <h5>The_Senate#7918</h5>
+              <p class="font-weight-light mb-0">
+                "Mindustryyyyy."
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Testimonials-->
+    <section id="testimonials" class="testimonials text-center">
+      <div class="container">
+        <h2 class="mb-5">
+          <img
+            src="assets/img/doge_icon_small_transparent_32xy32.png"
+            alt="..."
+          />What people are saying...<img
+            src="assets/img/doge_icon_small_transparent_32xy32.png"
+            alt="..."
+          />
+        </h2>
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+              <img
+                class="img-fluid rounded-circle mb-3 pfp-icon"
+                src="assets/img/doge_icon.PNG"
+                alt="..."
+              />
+              <h5>Margaret E.</h5>
+              <p class="font-weight-light mb-0">
+                "This is fantastic! Thanks so much guys!"
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Contact section-->
+    <section id="contact" class="bg-fade">
+      <div class="container px-4">
+        <div class="row gx-4 justify-content-center">
+          <div class="col-lg-8">
+            <h2>
+              <img
+                src="assets/img/doge_icon_small_transparent_32xy32.png"
+                alt="..."
+              />
+              <img
+                src="assets/img/doge_icon_small_transparent_32xy32.png"
+                alt="..."
+              />Contact us<img
+                src="assets/img/doge_icon_small_transparent_32xy32.png"
+                alt="..."
+              />
+              <img
+                src="assets/img/doge_icon_small_transparent_32xy32.png"
+                alt="..."
+              />
+            </h2>
+            <p class="lead">
+              Find us in
+              <a href="https://discord.com/invite/BmCssqnhX6">Discord</a>!!
+            </p>
+            <p class="lead">
+              Official email for enquiries:
+              <a href="mailto:alex.mindustry@gmail.com"
+                >alex.mindustry@gmail.com</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+      <div class="container px-4">
+        <p class="m-0 text-center text-white">
+          Copyright &copy; Doge Multiverse 2021
+        </p>
+      </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
