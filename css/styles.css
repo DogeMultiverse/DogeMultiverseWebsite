@@ -7904,7 +7904,7 @@ ul.ex2 {
  /* Notorious did an edit here*/
  /*notorious colors are (00ffd5,002acc,0d6efd,5a6a7d,1e8ffd)*/
    .contact {
-     background: linear-gradient(180deg,#ddd,#bbb);
+     background: linear-gradient(180deg,rgba(14, 137, 253, 0.377),#ddd);
      border-radius: 50px;
      transition: 0.2s;
    }
@@ -11153,11 +11153,13 @@ section {
   border-radius: 0;
 }
 .game-mod {
-  background: linear-gradient(45deg ,#9000ff,#ff8fc5 );
+  background: linear-gradient(45deg ,hsl(0, 0%, 100%),#3686ff1e );
   border-radius: 25px;
+  border: 2px solid rgba(10, 145, 255, 0.12);
   text-align: center;
   height: 50px;
-  width: 200px;
+  width: 190px;
+  margin: 10px;
   list-style: none;
   cursor: pointer;
   transition: 0.2s;
