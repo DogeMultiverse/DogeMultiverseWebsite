@@ -551,7 +551,6 @@ progress {
     font-size: 2.5rem;
   }
 }
-
 .list-unstyled {
   padding-left: 0;
   list-style: none;
@@ -559,17 +558,28 @@ progress {
 
 .list-inline {
   padding-left: 0;
+  border-radius: 50px;
   list-style: none;
+    background: linear-gradient(180deg, #0d6efd, #1e8ffd);
+  transition: 0.2s;
+}
+.list-inline:hover {
+  box-shadow:2px 4px 6px 4px #0d6efd;
 }
 
 .list-inline-item {
   display: inline-block;
+  transition: 0.2s;
+  target:_blank;
 }
 .list-inline-item:not(:last-child) {
   margin-right: 1.5rem;
 }
 .list-inline-item:not(:first-child) {
   margin-left: 1.5rem;
+}
+.list-inline-item:hover {
+  transform: rotate(5deg);
 }
 
 .initialism {
@@ -596,8 +606,8 @@ progress {
 }
 
 .img-fluid {
-  max-width: 30%;
-  max-height: 30%;
+  max-width: 50%;
+  max-height: 50%;
 }
 
 .img-thumbnail {
@@ -3195,11 +3205,12 @@ ul.ex2 {
   color: #000;
   background-color: #f8f9fa;
   border-color: #f8f9fa;
+  transition: 0.2s;
 }
 .btn-light:hover {
   color: #000;
-  background-color: #f9fafb;
-  border-color: #f9fafb;
+  background-color: #ccc;
+  border-color: #ccc;
 }
 .btn-check:focus + .btn-light, .btn-light:focus {
   color: #000;
@@ -4273,6 +4284,10 @@ ul.ex2 {
 }
 .white {
   color: rgb(255, 255, 255);
+  transition: 0.2s;
+}
+.white:hover {
+  color: #ddd;
 }
 .navbar-light .navbar-toggler-icon {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
@@ -7050,7 +7065,6 @@ ul.ex2 {
 .mb-0 {
   margin-bottom: 0 !important;
 }
-
 .mb-1 {
   margin-bottom: 0.25rem !important;
 }
@@ -7066,11 +7080,9 @@ ul.ex2 {
 .mb-4 {
   margin-bottom: 1.5rem !important;
 }
-
 .mb-5 {
   margin-bottom: 3rem !important;
 }
-
 .mb-auto {
   margin-bottom: auto !important;
 }
@@ -7467,7 +7479,7 @@ ul.ex2 {
 }
 
 .bg-primary {
-  background-color: #0d6efd !important;
+  background-color:#0d6efd !important;
 }
 
 .bg-secondary {
@@ -7889,9 +7901,51 @@ ul.ex2 {
         display: none;
     }
 }
-  .pfp-icon{
+ /* Notorious did an edit here*/
+ /*notorious colors are (00ffd5,002acc,0d6efd,5a6a7d,1e8ffd)*/
+   .contact {
+     background: linear-gradient(180deg,#ddd,#bbb);
+     border-radius: 50px;
+     transition: 0.2s;
+   }
+   .contact:hover {
+     box-shadow: 2px 4px 6px grey;
+   }
+   .doge-icon-title {
+     transition: 0.3s;
+   }
+   .doge-icon-title:hover {
+     transform: rotate(360deg);
+   }
+   .doge_icon {
+     width: 50px;
+     height: 50px;
+   }
+   .quick-buy-title {
+     font-family: monospace;
+     text-align: center;
+     border-radius: 50px;
+     transition: 0.2s;
+   }
+   .quick-buy-title:hover {
+     color:#00ffd5;
+     text-shadow: green;
+     word-spacing: 10px;
+     background: linear-gradient(180deg,#002acc,#0d6efd);
+   }
+   .pfp-icon{
     max-height: 200px;
-    max-width: 5rem;
+    width: 5rem;
+  }
+  .pfp-icon-border{
+    border: 1px solid none;
+     transition: 0.2s;
+  }
+  .pfp-icon-border:hover{
+    background-color: #5a6a7d;
+    border: 1px solid cyan;
+  box-shadow: 7px 7px 7px 7px #5a6a7d;
+  transform: rotate(5deg);
   }
   .features-icons .features-icons-item {
     max-width: 20rem;
@@ -11000,7 +11054,7 @@ section {
   border-radius: 10px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.24);
   border: 2px solid rgba(10, 145, 255, 0.12);
-  font-size: 16px;   
+  font-size: 16px;
   transition: all 0.3s ease;
   position: relative;
   display: flex;
@@ -11021,7 +11075,7 @@ section {
   border-radius: 10px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.24);
   border: 2px solid rgba(10, 145, 255, 0.12);
-  font-size: 16px;   
+  font-size: 16px;
   transition: all 0.3s ease;
   position: relative;
   display: flex;
@@ -11033,15 +11087,15 @@ section {
 }
 
 .card2infoallocation {
-  width: 100%; 
+  width: 100%;
   max-width: 700px;
   background-color: #29292900;
   margin: 15px;
   border-radius: 10px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.24);
   border: 2px solid rgba(10, 145, 255, 0.12);
-  font-size: 16px;   
-  transition: all 0.3s ease; 
+  font-size: 16px;
+  transition: all 0.3s ease;
   position: relative;
   display: flex;
   /* justify-content: center; */
@@ -11059,8 +11113,8 @@ section {
   border-radius: 10px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.24);
   border: 2px solid rgba(10, 145, 255, 0.12);
-  font-size: 16px;   
-  transition: all 0.5s ease; 
+  font-size: 16px;
+  transition: all 0.5s ease;
   position: relative;
   display: flex;
   /* justify-content: center; */
@@ -11071,7 +11125,7 @@ section {
 }
 .card2infolpmilestones:hover {
   min-height: 20px;
-  font-size: 18px; 
+  font-size: 18px;
   font-weight: 600;
   background-position: -20px;
   transition: all 0.5s ease;
@@ -11097,26 +11151,20 @@ section {
 	-webkit-mask-position: 13rem 6rem;
 	transform: rotate(-14deg);
   border-radius: 0;
-} 
-
-.card2infogamemodes {
-  width: 100%; 
-  max-width: 150px;
-  background-color: #29292900;
-  margin: 55px;
-  border-radius: 10px;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.24);
-  border: 2px solid rgba(10, 145, 255, 0.12);
-  font-size: 16px;   
-  transition: all 0.3s ease; 
-  position: relative;
-  display: flex;
-  /* justify-content: center; */
-  /* align-items: center; */
-  flex-direction: column;
-  cursor: pointer;
-  transition: all 0.3s ease;
 }
+.game-mod {
+  background: linear-gradient(45deg ,#9000ff,#ff8fc5 );
+  border-radius: 25px;
+  text-align: center;
+  height: 50px;
+  width: 200px;
+  list-style: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.game-mod:hover {
+    border-radius: 10px;
+  }
 .icon2 {
   margin: 0 auto;
   width: 100%;
@@ -11161,14 +11209,14 @@ section {
   transition: all 0.3s ease;
 }
 .card2info .title {
-  width: 80%; 
+  width: 80%;
   font-size: 16px;
   text-align: center;
   margin-top: 0px;
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
-  opacity: 1;  
+  opacity: 1;
 }
 .card2info .text {
   width: 80%;
@@ -11178,11 +11226,11 @@ section {
   margin-top: 0px;
   font-weight: 500;
   letter-spacing: 2px;
-  opacity: 1; 
+  opacity: 1;
   transition: all 0.3s ease;
 }
 
-.card2info:hover .title{ 
+.card2info:hover .title{
   font-size: 16px;
   font-weight: 900px;
   transition: all 0.3s ease;
@@ -11225,4 +11273,3 @@ section {
   opacity: 1;
   transition: all 0.3s ease;
 }
-
