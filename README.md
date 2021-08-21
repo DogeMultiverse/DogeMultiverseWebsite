@@ -3,13 +3,14 @@
 ## 🔥🔥 INTEGRATED GAME TOKENS, MORE REWARDS 🔥🔥
 
 - 🔥 20,000++ ORGANIC PLAYERS, ZERO Marketing Spent 🔥
-- 🟢 NO PRESALE 🟢 NO ICO
+- 🟢 NO PRESALE 🟢 NO ICO 🟢
 - 🟢 95% MAX SUPPLY FOR CIRCULATION
 
 ## 🚀 Why is Doge Multiverse worth your time? 🚀
 
 - ✅ Existing Game Integration 🔥 FULL PRODUCT
-- ✅ Room to grow🔥 More Games = More Players!
+- ✅ Audited Contract 📝
+- ✅ Room to grow 🔥 More Games = More Players!
 - ✅ Hyper Deflationary🔥 1% Total Supply BURN if Low Volume
 - ✅ Doge Multiverse our own DEX to support our ecosystem
 - ✅ Transparent referral system integrated in Contract. +10% rewards!
