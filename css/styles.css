@@ -647,7 +647,7 @@ progress {
   margin-left: auto;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 306px) {
   .container-sm, .container {
     max-width: 540px;
   }
@@ -729,7 +729,7 @@ progress {
   width: 16.6666666667%;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 306px) {
   .col-sm {
     flex: 1 0 0%;
   }
@@ -1098,7 +1098,7 @@ progress {
   --bs-gutter-y: 3rem;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 306px) {
   .col-sm-auto {
     flex: 0 0 auto;
     width: auto;
@@ -3575,7 +3575,7 @@ ul.ex2 {
   left: auto;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 306px) {
   .dropdown-menu-sm-start {
     --bs-position: start;
   }
@@ -4104,7 +4104,7 @@ ul.ex2 {
   overflow-y: auto;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 306px) {
   .navbar-expand-sm {
     flex-wrap: nowrap;
     justify-content: flex-start;
@@ -4457,7 +4457,7 @@ ul.ex2 {
 .card-group > .card {
   margin-bottom: 0.75rem;
 }
-@media (min-width: 576px) {
+@media (min-width: 306px) {
   .card-group {
     display: flex;
     flex-flow: row wrap;
@@ -4980,7 +4980,7 @@ ul.ex2 {
   border-left-width: 1px;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 306px) {
   .list-group-horizontal-sm {
     flex-direction: row;
   }
@@ -5428,7 +5428,7 @@ ul.ex2 {
   margin: 0.25rem;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 306px) {
   .modal-dialog {
     max-width: 500px;
     margin: 1.75rem auto;
@@ -6296,7 +6296,7 @@ ul.ex2 {
   z-index: 1020;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 306px) {
   .sticky-sm-top {
     position: sticky;
     top: 0;
@@ -7614,7 +7614,7 @@ ul.ex2 {
   visibility: hidden !important;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 306px) {
   .float-sm-start {
     float: left !important;
   }
@@ -7895,8 +7895,8 @@ ul.ex2 {
   }
   .ax-icon2{
     height: 25px;/*1.8rem;*/
-  }
-   .metamask-icon{
+  } 
+  .metamask-icon{
     height: 1rem;
   }
   @media only screen {
