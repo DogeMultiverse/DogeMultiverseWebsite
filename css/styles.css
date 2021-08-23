@@ -7893,12 +7893,15 @@ ul.ex2 {
   .ax-icon{
     height: 40px;/*1.8rem;*/
   }
+  .ax-icon2{
+    height: 25px;/*1.8rem;*/
+  }
    .metamask-icon{
     height: 1rem;
   }
-  @media only screen and (min-width: 311px) {
+  @media only screen {
     #hide-when-mobile {
-        display: none;
+        display: true;
     }
 }
  /* Notorious did an edit here*/
