@@ -19,7 +19,7 @@
 
 ## 💎 Links 💎
 
-- ✅ Website https://doge.servegame.com
+- ✅ Website https://DogeMultiverse.sg
 - ✅ MVP https://discord.gg/sHBFkzDJhv
 - ✅ Contract https://bscscan.com/address/0x3c37ab18d0ec386d06dd68e3470e49bfdc0d46e8
 - ✅ Poocoinapp https://poocoin.app/tokens/0x3c37ab18d0ec386d06dd68e3470e49bfdc0d46e8
