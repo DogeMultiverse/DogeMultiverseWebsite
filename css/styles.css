@@ -632,7 +632,6 @@ progress {
   font-size: 0.875em;
   color: #6c757d;
 }
-
 .container,
 .container-fluid,
 .container-xxl,
@@ -1466,7 +1465,6 @@ progress {
     flex: 0 0 auto;
     width: 25%;
   }
-
   .col-lg-4 {
     flex: 0 0 auto;
     width: 33.33333333%;
@@ -7895,7 +7893,7 @@ ul.ex2 {
   }
   .ax-icon2{
     height: 25px;/*1.8rem;*/
-  } 
+  }
   .metamask-icon{
     height: 1rem;
   }
@@ -7908,7 +7906,7 @@ ul.ex2 {
  /*notorious colors are (00ffd5,002acc,0d6efd,5a6a7d,1e8ffd)*/
    .contact {
      margin-top: 25px;
-     text-align: center; 
+     text-align: center;
      background: linear-gradient(180deg,     rgba(14, 137, 253, 0.177),rgba(221, 221, 221, 0.152));
      border-radius: 50px;
      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.24);
@@ -7943,6 +7941,21 @@ ul.ex2 {
     max-height: 200px;
     width: 5rem;
   }
+  /*update 2*/
+  @media (max-width: 1200.98px) {
+    .col-lg-3 {
+      width: 33%;
+    }
+  }
+  @media (max-width: 1000.98px) {
+    .col-lg-3 {
+      width: 50%;
+    }
+  }
+  @media (max-width: 700.98px) {
+    .col-lg-3 {
+      width: 100%;
+    }}
   .pfp-icon-border{
     border: 1px solid none;
      transition: 0.2s;
