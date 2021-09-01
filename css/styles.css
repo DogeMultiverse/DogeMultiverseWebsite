@@ -3109,6 +3109,10 @@ ul.ex2 {
   border-color: #198754;
 }
 
+/* added by alex */
+.btn-max-width{
+  max-width: 400px;
+}
 .btn-info {
   color: #000;
   background-color: #0dcaf0;
