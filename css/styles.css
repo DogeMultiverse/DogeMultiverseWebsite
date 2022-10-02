@@ -63,8 +63,9 @@ body {
 }
 
 canvas{ /* added by alex */
+  background-color: #0d6efd;
   width: 100vw;
-  height: 100vh;
+  height: 10vh;
 }
 
 hr {

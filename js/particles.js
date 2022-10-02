@@ -5,7 +5,7 @@ var canvas = document.querySelector("#scene"),
   mouse = {x:0,y:0},
   radius = 3;
 
-var colors = ["#FFFFFF","#FFFFFF", "#FFFFFF","#FFFFFF", "#FFFFFF"];
+var colors = ["#FFFFFF","#FFFFF0", "#FFFFD0","#FFFFE0", "#FFFFAF"];
 
 var copy = "helloworld";// document.querySelector("#copy");
 
@@ -19,8 +19,8 @@ function Particle(x,y){
     y: y
   };
   this.r =  Math.random()*5 + 2;
-  this.vx = (Math.random()-0.5)*20;
-  this.vy = (Math.random()-0.5)*20;
+  this.vx = (Math.random()-0.5)*30;
+  this.vy = (Math.random()-0.5)*30;
   this.accX = 0;
   this.accY = 0;
   this.friction = Math.random()*0.05 + 0.75974;
@@ -29,7 +29,7 @@ function Particle(x,y){
 }
 
 Particle.prototype.render = function() {
-  this.accscale = 100;
+  this.accscale = 130;
   this.accX = (this.dest.x - this.x)/this.accscale;
   this.accY = (this.dest.y - this.y)/this.accscale;
   this.vx += this.accX;
@@ -48,8 +48,8 @@ Particle.prototype.render = function() {
   var a = this.x - mouse.x;
   var b = this.y - mouse.y;
 
-  var distance = Math.sqrt( a*a + b*b );
-  if(distance<(radius*70)){
+  var distance2 = ( a*a + b*b );
+  if(distance2<((radius*70)*(radius*70))){
     this.accX = (this.x - mouse.x)/100;
     this.accY = (this.y - mouse.y)/100;
     this.vx += this.accX;
@@ -81,7 +81,7 @@ function initScene(){
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  ctx.font = "bold "+(ww/10)+"px sans-serif";
+  ctx.font = "bold "+(ww/6)+"px sans-serif";
   ctx.textAlign = "center";
   ctx.fillText(copy, ww/2, wh/2);
 
@@ -101,8 +101,8 @@ function initScene(){
 
 }
 
-function render(a) {
-  requestAnimationFrame(render);
+function renderer(a) {
+  requestAnimationFrame(renderer);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   for (var i = 0; i < amount; i++) {
     particles[i].render();
@@ -115,5 +115,5 @@ window.addEventListener("mousemove", onMouseMove);
 window.addEventListener("touchmove", onTouchMove); 
 window.addEventListener("touchend", onTouchEnd);
 initScene();
-requestAnimationFrame(render);
+requestAnimationFrame(renderer);
 
