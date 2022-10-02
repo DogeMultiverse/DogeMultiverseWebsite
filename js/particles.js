@@ -7,7 +7,7 @@ var canvas = document.querySelector("#scene"),
 
 var colors = ["#FFFFFF","#FFFFF0", "#FFFFD0","#FFFFE0", "#FFFFAF"];
 
-var copy = "helloworld";// document.querySelector("#copy");
+var copy = "Doge Multiverse";// document.querySelector("#copy");
 
 var ww = canvas.width = window.innerWidth;
 var wh = canvas.height = window.innerHeight; 
@@ -18,27 +18,25 @@ function Particle(x,y){
     x : x,
     y: y
   };
-  this.r =  Math.random()*5 + 2;
+  this.r =  Math.random()*0.5 + 6;
   this.vx = (Math.random()-0.5)*30;
   this.vy = (Math.random()-0.5)*30;
   this.accX = 0;
   this.accY = 0;
-  this.friction = Math.random()*0.05 + 0.75974;
+  this.friction =  0.1991975974;//Math.random()*0.05 +
 
   this.color = colors[Math.floor(Math.random()*6)];
 }
 
 Particle.prototype.render = function() {
-  this.accscale = 130;
+  this.accscale = 50;
   this.accX = (this.dest.x - this.x)/this.accscale;
   this.accY = (this.dest.y - this.y)/this.accscale;
-  this.vx += this.accX;
-  this.vy += this.accY;
-  this.vx *= this.friction;
-  this.vy *= this.friction;
 
-  this.x += this.vx;
-  this.y +=  this.vy;
+  this.vx += this.accX -this.vx*this.friction;
+  this.vy += this.accY-this.vy*this.friction;
+  this.x += this.vx+Math.random()*0.95;
+  this.y +=  this.vy+Math.random()*0.95;
 
   ctx.fillStyle = this.color;
   ctx.beginPath();
@@ -50,8 +48,8 @@ Particle.prototype.render = function() {
 
   var distance2 = ( a*a + b*b );
   if(distance2<((radius*70)*(radius*70))){
-    this.accX = (this.x - mouse.x)/100;
-    this.accY = (this.y - mouse.y)/100;
+    this.accX = (this.x - mouse.x)/10;
+    this.accY = (this.y - mouse.y)/10;
     this.vx += this.accX;
     this.vy += this.accY;
   }
@@ -81,18 +79,21 @@ function initScene(){
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  ctx.font = "bold "+(ww/6)+"px sans-serif";
+  ctx.font = "bold "+(ww/10)+"px sans-serif";
   ctx.textAlign = "center";
-  ctx.fillText(copy, ww/2, wh/2);
-
+  ctx.transform(1,0,0,8,0,0);
+  ctx.fillText(copy, ww/2, wh/12);
+  
   var data  = ctx.getImageData(0, 0, ww, wh).data;
+  ctx.setTransform(1,0,0,1,0,0);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.globalCompositeOperation = "screen";
 
   particles = [];
-  for(var i=0;i<ww;i+=Math.round(ww/150)){
-    for(var j=0;j<wh;j+=Math.round(ww/150)){
-      if(data[ ((i + j*ww)*4) + 3] > 150){
+  scale=120;
+  for(var i=0;i<ww;i+=Math.round(ww/scale)){
+    for(var j=0;j<wh;j+=Math.round(wh/scale)){
+      if(data[ ((i + j*ww)*4) + 3] > 10){
         particles.push(new Particle(i,j));
       }
     }
