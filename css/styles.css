@@ -62,6 +62,18 @@ body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+canvas {/* added by alex */
+  /* background-color: #0d6e00; */
+  width: 50vw;
+  height: 10vh;
+} 
+
+@media only screen and (max-width: 1000px) {
+  #sceneparticles {
+      display: none;
+  }
+}
+
 hr {
   margin: 1rem 0;
   color: inherit;
@@ -11299,3 +11311,4 @@ section {
   opacity: 1;
   transition: all 0.3s ease;
 }
+
