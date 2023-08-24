@@ -2411,9 +2411,11 @@ textarea.form-control-lg {
 }
 ::selection {
   background: #140d80; /* WebKit/Blink Browsers */
+	color: #ffffff;
 }
 ::-moz-selection {
   background: #140d80; /* Gecko Browsers */
+	color: #ffffff;
 }
 
 @media (prefers-reduced-motion: reduce) {
